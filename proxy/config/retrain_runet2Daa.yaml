@@ -1,0 +1,25 @@
+training_config:
+  learning_rate: 0.0001 # 1e-4
+  step_size: 1000
+  gamma: 0.9
+  loss_fn: "RSE_loss"  # Store the function name as a string; the actual function must be defined in code
+  gradient_clip_val: 40
+  num_epochs: 100
+  path_to_model: "checkpoint"
+
+model_config:
+  filters: 16
+  units: [3, 1, 2] # ninputs (states + static), ncontrols, noutputs (states)
+  kernel_size: [5, 5, 1]
+  padding: [2, 2, 0]
+  with_control: True
+  with_states: True
+  norm_type: 'group'
+  num_groups: 4
+  strides: [[2, 2, 1], [2, 2, 1]]
+
+dataset_config:
+  dir_to_dataset: "/project2/jafarpou_227/Storage_Folder/Zhen/Data/CO2_Dataset/grid2D_512_128_gaussian"
+  # dir_to_dataset: "database"
+  batch_size: 2
+  pred_length: 15

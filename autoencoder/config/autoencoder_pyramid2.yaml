@@ -1,0 +1,62 @@
+model_config:
+  units: [1, 1]
+  spatial_dims: 3
+  hidden_dims: [16, 32, 32, 64, 64, 128]
+  latent_dims: 1
+  blk_idx: []
+  kernel_size: [3, 3, 1]
+  padding: [1, 1, 0]
+  scale_factors: [[1, 4, 1], [1, 1, 1], [2, 2, 1], [1, 1, 1], [2, 2, 1]]
+  latent_scale_factors: [[2, 2, 1], [4, 4, 1], [8, 8, 1]]
+  num_residual_layer: 3
+  proj_dims: 64
+  num_groups: 4
+  adn_ordering: 'NDA'
+  out_act: 'sigmoid'
+  level: 4
+  norm: 'group'
+  act: 'prelu'
+  gaussian_blur_sigma: 2.0
+  use_convtranspose: False
+  attention_levels: [False, False, False, False, True, True]
+  use_hidden_proj: True
+  attn_num_heads: 4
+  decoder_kernel_size: [4, 4, 1]
+  decoder_padding: [2, 2, 0]
+  use_different_kernel: True
+  use_default_adn_config: False
+  decode_factors: [[2, 2, 1], [2, 2, 1], [1, 4, 1]]
+  h_grain_factors: [[2, 2, 1], [4, 4, 1]]
+  z_grain_factor: [8, 8, 1]
+  index_sampling_type: 'bottom2top'
+  upsampling_mode: 'nearest'
+
+train_config:
+  num_epoch: 200
+  spatial_dims: 3
+  image_size: [128, 512, 1]
+  batch_size: 1
+  learning_rate: 0.001
+  weight_decay: 1e-06
+  verbose: 0
+  gradient_clip: False
+  gradient_clip_val: False
+  step_size: 600
+  gamma: 0.975
+  loss_mode: 'l1'
+  autoencoder_warm_up_n_epochs: 1000.0
+  adv_weight: 0.01
+  perceptual_weight: 0.01
+  perceptual_level: 3
+  kldiv_weight: 0.1
+  seed: 42
+
+disc_config:
+  in_channels: 1
+  num_channels: 32
+  out_channels: 1
+  kernel_size: 4
+  padding: 1
+
+dataset_config:
+  dir_to_dataset: '/scratch1/zhenq/AramcoProject/0.SimulationRuns/Exp2-2D_Simulation_512_128-20241218/database'

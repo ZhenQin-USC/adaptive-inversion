@@ -1,0 +1,24 @@
+Basic setup:
+  result_dir: 'OptResults'
+  initial_idx: 1
+  target_idx: 0
+  steps: [5, 10]
+  dmin: 0
+  dmax: 40
+  nx: 128
+  ny: 512
+  nz: 1
+  all_grain_factors: [[2, 2, 1], [4, 4, 1], [8, 8, 1], [16, 16, 1], [32, 32, 1]]
+  all_latent_shapes: [[1, 1, 32, 32, 1], [1, 1, 16, 16, 1], [1, 1, 8, 8, 1], [1, 1, 4, 4, 1], [1, 1, 2, 2, 1], [1, 1, 1, 1, 1]]
+  selected_scale_index: [0, 1, 2, 3, 4, 5]
+  latent_grains_shapes: [[1, 1, 1], [2, 2, 1], [4, 4, 1], [8, 8, 1], [16, 16, 1], [32, 32, 1]]
+  selected_grain_ratio: [0.4, 1.0, 0.0, 0.0, 0.0, 0.0]
+Measurement setup:
+  vertical_interval: 8
+  horizontal_interval: 32
+  marginal: 16
+  hard_data_locations: []
+ESMDA setup:
+  d_std: 0.05
+  alpha_list: [9.333, 7, 4, 2]
+  seed: 312

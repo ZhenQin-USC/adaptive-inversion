@@ -1,0 +1,18 @@
+Basic setup:
+  result_dir: 'results'
+  nens: 100
+  real_idx: 0
+  steps: [5, 10]
+  dmin: 0
+  dmax: 40
+  nx: 128
+  ny: 512
+  nz: 1
+Measurement setup:
+  scale_factor: [4, 8, 1]
+  marginal: 0
+  hard_data_locations: []
+ESMDA setup:
+  d_std: 0.05
+  alpha_list: [9.333, 7, 4, 2]
+  seed: 312

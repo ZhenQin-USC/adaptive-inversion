@@ -1,0 +1,5 @@
+tr_radius: 1.0
+barrier_para: 0.001
+barrier_tol: 0.001
+xtol: 0.0002
+gtol: 0.0002
