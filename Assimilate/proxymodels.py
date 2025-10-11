@@ -10,7 +10,7 @@ from typing import Callable, Dict, List, Optional, Sequence, Tuple, Union, Any
 from .functions import generate_index_from_coarse_to_fine, get_restore_locations, restore_unmasked_elements
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
-from mpi4py import MPI
+# from mpi4py import MPI
 import multiprocessing as mp
 
 save_fig = True # False # 
@@ -119,44 +119,44 @@ def initialize_indices_and_masks(image_size, scale_factors, decode_factors,
     }
 
 # TO DO: General parallelization helper using MPI with max_workers argument
-def run_parallel_tasks_mpi(task_func: Callable, task_range: range, *args: Any, desc: str = "Processing tasks", max_workers=None):
-    # MPI setup inside the function
-    comm = MPI.COMM_WORLD
-    rank = comm.Get_rank()
-    size = comm.Get_size()
-    # Set max_workers to size if not specified
-    if max_workers is None or max_workers > size:
-        max_workers = size
-    print("max_workers", max_workers)
+# def run_parallel_tasks_mpi(task_func: Callable, task_range: range, *args: Any, desc: str = "Processing tasks", max_workers=None):
+#     # MPI setup inside the function
+#     comm = MPI.COMM_WORLD
+#     rank = comm.Get_rank()
+#     size = comm.Get_size()
+#     # Set max_workers to size if not specified
+#     if max_workers is None or max_workers > size:
+#         max_workers = size
+#     print("max_workers", max_workers)
 
-    results = []
+#     results = []
 
-    # If this rank is not within the max_workers range, it will be idle
-    if rank < max_workers:
-        # Divide the tasks among active ranks (up to max_workers)
-        chunk_size = len(task_range) // max_workers
-        start_idx = rank * chunk_size
-        end_idx = (rank + 1) * chunk_size if rank != max_workers - 1 else len(task_range)
+#     # If this rank is not within the max_workers range, it will be idle
+#     if rank < max_workers:
+#         # Divide the tasks among active ranks (up to max_workers)
+#         chunk_size = len(task_range) // max_workers
+#         start_idx = rank * chunk_size
+#         end_idx = (rank + 1) * chunk_size if rank != max_workers - 1 else len(task_range)
         
-        # Each process handles its part of the task range
-        local_task_range = task_range[start_idx:end_idx]
+#         # Each process handles its part of the task range
+#         local_task_range = task_range[start_idx:end_idx]
         
-        local_results = []
-        for i in tqdm(local_task_range, desc=f"Rank {rank} {desc}"):
-            local_results.append(task_func(i, *args))
+#         local_results = []
+#         for i in tqdm(local_task_range, desc=f"Rank {rank} {desc}"):
+#             local_results.append(task_func(i, *args))
 
-        # Gather results at the root process
-        all_results = comm.gather(local_results, root=0)
-    else:
-        # Idle ranks participate in the gather operation but send nothing
-        all_results = comm.gather([], root=0)
+#         # Gather results at the root process
+#         all_results = comm.gather(local_results, root=0)
+#     else:
+#         # Idle ranks participate in the gather operation but send nothing
+#         all_results = comm.gather([], root=0)
 
-    # Combine results at the root process
-    if rank == 0:
-        # Flatten the list of lists
-        results = [item for sublist in all_results for item in sublist]
+#     # Combine results at the root process
+#     if rank == 0:
+#         # Flatten the list of lists
+#         results = [item for sublist in all_results for item in sublist]
     
-    return results
+#     return results
 
 # General parallelization helper
 def run_parallel_tasks(task_func: Callable, task_range: range, *args: Any, desc: str = "Processing tasks", max_workers=4):
